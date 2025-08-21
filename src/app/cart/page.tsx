@@ -2,7 +2,7 @@
 
 import PaymentForm from "@/components/PaymentForm"
 import ShippingForm from "@/components/ShippingForm"
-import { CartItemsType } from "@/types"
+import { CartItemsType, ShippingFormInputs } from "@/types"
 import { ArrowRight, Trash2 } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useState } from "react"
@@ -123,9 +123,9 @@ const CartPage = () => {
                                     <div className="flex flex-col justify-between">
                                         <div className="flex flex-col justify-between">
                                             <p className="text-sm font-medium">{item.name}</p>
-                                            <p className="text-xs text-gary-500">Quantity:{" "}{item.quantity}</p>
-                                            <p className="text-xs text-gary-500">Size:{" "}{item.selectedSize}</p>
-                                            <p className="text-xs text-gary-500">Color:{" "}{item.selectedColor}</p>
+                                            <p className="text-xs text-gray-500">Quantity:{" "}{item.quantity}</p>
+                                            <p className="text-xs text-gray-500">Size:{" "}{item.selectedSize}</p>
+                                            <p className="text-xs text-gray-500">Color:{" "}{item.selectedColor}</p>
                                         </div>
                                         <p className="font-medium">${item.price.toFixed(2)}</p>
                                     </div>
@@ -137,8 +137,13 @@ const CartPage = () => {
                             </div>
                         ))
                     ) : activeStep === 2 ? (
-                        <ShippingForm />
-                    ) : (activeStep === 3 && shippingForm ? <PaymentForm /> : <p>Please fill in the shipping form to continue.</p>
+                         <ShippingForm setShippingForm={setShippingForm} />
+                    ) : activeStep === 3 && shippingForm ? (
+                        <PaymentForm />
+                    ) : (
+                        <p>
+                            Please fill in the shipping form to continue.
+                        </p>
                     )}
                 </div>
                 {/* DETAILS */}
